@@ -1,0 +1,5 @@
+.idea
+go-euro.iml
+*.log
+target
+out.csv
