@@ -1,15 +1,8 @@
 package com.jordanabderrachid.http;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
-public class RequesterTest
-  extends TestCase
-{
-  public RequesterTest(String testName) { super(testName); }
-
-  public static Test suite() { return new TestSuite(RequesterTest.class); }
-
+public class RequesterTest {
+  @Test
   public void testPlaceholder() {}
 }

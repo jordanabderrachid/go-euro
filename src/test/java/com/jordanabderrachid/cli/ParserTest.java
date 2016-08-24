@@ -1,28 +1,13 @@
 package com.jordanabderrachid.cli;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
-public class ParserTest
-  extends TestCase
-{
-  /**
-   * Create the test case
-   *
-   * @param testName name of the test case
-   */
-  public ParserTest(String testName) { super(testName); }
-
-  /**
-   *
-   * @return the suite of test being tested
-   */
-  public static Test suite() { return new TestSuite( ParserTest.class); }
-
+public class ParserTest {
   /**
    * test static `parseCity` method. This method parse the CLI arguments and extract the name of the requested city.
    */
+  @Test
   public void testParseCity() {
     assertEquals(Parser.parseCity(new String[]{}), "");
     assertEquals(Parser.parseCity(new String[]{"Berlin"}), "Berlin");
