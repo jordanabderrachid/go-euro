@@ -21,6 +21,9 @@ public class Requester {
   private static final String ACCEPT_HEADER_KEY = "Accept";
   private static final String EXPECTED_CONTENT_TYPE = "application/json;charset=UTF-8";
 
+  private static final String USER_AGENT_HEADER_KEY = "User-Agent";
+  private static final String USER_AGENT_HEADER_FORMAT = "go-euro-cli/%s";
+
   public static String getSuggestions(String city)
     throws InvalidCityException, ConnectionException, BadResponseException
   {
@@ -33,7 +36,9 @@ public class Requester {
       connection.setReadTimeout(READ_TIMEOUT);
 
       connection.setRequestProperty(ACCEPT_HEADER_KEY, EXPECTED_CONTENT_TYPE);
-      connection.setRequestProperty("User-Agent", "curl/7.43.0");
+
+      String userAgent = String.format(USER_AGENT_HEADER_FORMAT, Requester.class.getPackage().getImplementationVersion());
+      connection.setRequestProperty(USER_AGENT_HEADER_KEY, userAgent);
 
       connection.connect();
 
