@@ -41,6 +41,9 @@
               <!-- specify entry point -->
               <mainClass>com.jordanabderrachid.App</mainClass>
               <classpathPrefix>dependency/</classpathPrefix>
+              <!-- store project version in manifest file -->
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
             </manifest>
           </archive>
         </configuration>

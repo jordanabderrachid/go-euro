@@ -9,7 +9,7 @@ import java.util.List;
 public class CSVWriter {
   private static final String LINE_SEPARATOR = System.lineSeparator();
 
-  public static void toFile(String filename, List<CSVRecord> records) throws WriteException {
+  public static String toFile(String filename, List<CSVRecord> records) throws WriteException {
     File file = FileSystems.getDefault().getPath(filename).toFile();
 
     try {
@@ -24,6 +24,8 @@ public class CSVWriter {
       }
 
       fileWriter.close();
+
+      return file.getAbsolutePath();
     } catch (IOException e) {
       // TODO log error message
       System.out.println(e.getMessage());
