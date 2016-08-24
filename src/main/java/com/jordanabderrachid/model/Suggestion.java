@@ -9,6 +9,7 @@ import com.jordanabderrachid.csv.CSVRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Suggestion implements CSVRecord {
   private static final String CSV_HEADER = "_id,name,type,latitude,longitude";
@@ -54,7 +55,7 @@ public class Suggestion implements CSVRecord {
   }
 
   public String getCSVString() {
-    return String.format(TO_CSV_FORMAT, this.getId(), this.getName(), this.getType(), this.getLatitude(), this.getLongitude());
+    return String.format(Locale.ROOT, TO_CSV_FORMAT, this.getId(), this.getName(), this.getType(), this.getLatitude(), this.getLongitude());
   }
 
   public static List<CSVRecord> fromJSON(String json) throws JsonSyntaxException {
