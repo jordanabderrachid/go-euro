@@ -2,7 +2,7 @@
 
 ###### TODO
 
-- [ ] handle exceptions in main function
+- [x] handle exceptions in main function
 - [ ] logger
-- [ ] unit test
+- [x] unit test
 - [ ] documentation
