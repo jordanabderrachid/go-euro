@@ -2,19 +2,14 @@ package com.jordanabderrachid.http;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
 
 public class Requester {
-
-  private static final String URL_TEMPLATE = "http://api.goeuro.com/api/v2/position/suggest/en/%s";
-
   private static final int CONNECT_TIMEOUT = 1000; // 1 sec.
   private static final int READ_TIMEOUT = 1000; // 1 sec.
 
@@ -24,25 +19,28 @@ public class Requester {
   private static final String USER_AGENT_HEADER_KEY = "User-Agent";
   private static final String USER_AGENT_HEADER_FORMAT = "go-euro-cli/%s";
 
-  public static String getSuggestions(String city)
-    throws InvalidCityException, ConnectionException, BadResponseException
-  {
-    try {
-      URL url = buildURL(city);
+  private URL url;
 
-      URLConnection connection = url.openConnection();
+  public Requester(URL url) {
+    this.url = url;
+  }
+
+  public String call() throws ConnectionException, BadResponseException {
+    try {
+      URLConnection connection = this.url.openConnection();
 
       connection.setConnectTimeout(CONNECT_TIMEOUT);
       connection.setReadTimeout(READ_TIMEOUT);
 
       connection.setRequestProperty(ACCEPT_HEADER_KEY, EXPECTED_CONTENT_TYPE);
 
-      String userAgent = String.format(USER_AGENT_HEADER_FORMAT, Requester.class.getPackage().getImplementationVersion());
+      String userAgent = String.format(Locale.ROOT, USER_AGENT_HEADER_FORMAT, Requester.class.getPackage().getImplementationVersion());
       connection.setRequestProperty(USER_AGENT_HEADER_KEY, userAgent);
 
       connection.connect();
 
       if (!connection.getContentType().equals(EXPECTED_CONTENT_TYPE)) {
+        // TODO log
         throw new BadResponseException("bad response content type");
       }
 
@@ -51,29 +49,9 @@ public class Requester {
       is.close();
 
       return body;
-    } catch (InvalidCityException e) {
-      throw e;
     } catch (IOException e) {
       // TODO log
       throw new ConnectionException("failed to connect to remote API");
-    }
-  }
-
-  /**
-   * build the request url according to the provided city.
-   * @param city the name of the city, eg: "Los Angeles"
-   * @return the url to call
-   */
-  private static URL buildURL(String city) throws InvalidCityException {
-    try {
-      String cityURLEncoded = URLEncoder.encode(city, StandardCharsets.UTF_8.toString()).replace("+", "%20");
-      String stringFormattedURL = String.format(URL_TEMPLATE, cityURLEncoded);
-      URL url = new URL(stringFormattedURL);
-
-      return url;
-    } catch (UnsupportedEncodingException | MalformedURLException e) {
-      // TODO log error
-      throw new InvalidCityException("failed to create url");
     }
   }
 }

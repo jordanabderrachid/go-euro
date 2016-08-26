@@ -6,10 +6,7 @@ import com.jordanabderrachid.cli.Parser;
 import com.jordanabderrachid.csv.CSVRecord;
 import com.jordanabderrachid.csv.CSVWriter;
 import com.jordanabderrachid.csv.WriteException;
-import com.jordanabderrachid.http.BadResponseException;
-import com.jordanabderrachid.http.ConnectionException;
-import com.jordanabderrachid.http.InvalidCityException;
-import com.jordanabderrachid.http.Requester;
+import com.jordanabderrachid.http.*;
 import com.jordanabderrachid.model.Suggestion;
 
 import org.apache.logging.log4j.Logger;
@@ -34,7 +31,8 @@ public class App
     logger.info("calling API for city {}", city);
 
     try {
-      String responseBody = Requester.getSuggestions(city);
+      Requester req = new Requester(URLBuilder.fromCity(city));
+      String responseBody = req.call();
       List<CSVRecord> suggestions = Suggestion.fromJSON(responseBody);
 
       if (suggestions.isEmpty()) {
