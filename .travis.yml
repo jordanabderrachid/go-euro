@@ -4,3 +4,15 @@ jdk:
   - oraclejdk8
 after_succes:
   - bash <(curl -s https://codecov.io/bash)
+before_deploy:
+  - mvn -DskipTests package
+  - export JAR_FILE=$(ls ./target/go-euro-*.jar)
+deploy:
+  provider: releases
+  api_key:
+    secure: IZqfwKBHgzdM3yvqVglsHgCFXtH64aPzveZttgvgZgdN1k1AMFt7xPlp+DKwFRDJLbtWLTlahljRNp5NEKDNJ0Vr2N/+WSEDb5IJez+0E8k1pOAWjprzE/IBkHP2QQ057Ze1tr6qU9nOM9L2e2uVnc5liITlp/hFZNWFKs+bARQTM2W1GGg/6m01Jku7K5g4rtd4HI/9gEdtP57I/Dn2AQDMBucle3+oo8ASKZij+BUj6rT6YhvLxWi1fk78fNJ6uEp1QCgmNYkx/l6ueiFZy26Qm277oxfhTg1Qiht7zWSLvd5FIdYTPJi0eIUqWozbTj2tl1ylXn9cd4lJSznDTNb3hWOE3vNZOnVHBHo52ro5d/KgrCINXcS7GFAaocPNEzPbfDpVyNXkLMDOIfoDH1p4AVZNUfydH+/4ce6NfUV2gCsi2ETYczR0Rtw7jX7JPKnb62k/aOkcWIlTwywlNvC2fD1Ey7iay7fpKA0DGgDM0cP9Tq7vyBoeclTFaUmnyejOQL1HKAu8L2RxFNfGKWoTIu1aUZWv5pbjLuVsL/zpA9vOD9RwtK22zBlBzjwTicywmKYuwkPNH6idHhu2TQn3u1KqZNCeo9iJ3FdiU8suvlZMJV8125X8nqvlUC5n78/+xECXQGtbL0iB9ULjmT/OfMvBdLSqWNAqJuCmUbo=
+  file: $JAR_FILE
+  skip_cleanup: true
+  on:
+    repo: jordanabderrachid/go-euro
+    tags: true
