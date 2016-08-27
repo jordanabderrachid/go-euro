@@ -9,6 +9,12 @@ import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
 
+/**
+ * This class is used to call an URL.
+ *
+ * @see java.net.URL
+ * @author jordanabderrachid
+ */
 public class Requester {
   private static final int CONNECT_TIMEOUT = 1000; // 1 sec.
   private static final int READ_TIMEOUT = 1000; // 1 sec.
@@ -21,10 +27,23 @@ public class Requester {
 
   private URL url;
 
+  /**
+   * The constructor.
+   *
+   * @param url - the url to call
+   */
   public Requester(URL url) {
     this.url = url;
   }
 
+  /**
+   * Call the url by processing an HTTP request, it sets the read and connection timeout, set the expected content
+   * type and the user agent. It then checks if the response content type is valid and returns the response payload.
+   *
+   * @return the response payload
+   * @throws ConnectionException
+   * @throws BadResponseException
+   */
   public String call() throws ConnectionException, BadResponseException {
     try {
       URLConnection connection = this.url.openConnection();

@@ -5,4 +5,4 @@
 - [x] handle exceptions in main function
 - [ ] logger
 - [x] unit test
-- [ ] documentation
+- [x] documentation

@@ -6,11 +6,18 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * This class is used to build a URL sued to call the goeuro remote api from different parameters.
+ *
+ * @see java.net.URL
+ * @author jordanabderrachid
+ */
 public class URLBuilder {
   private static final String URL_TEMPLATE = "http://api.goeuro.com/api/v2/position/suggest/en/%s";
 
   /**
    * build the request url according to the provided city.
+   *
    * @param city the name of the city, eg: "Los Angeles"
    * @return the url to call
    */

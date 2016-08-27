@@ -4,6 +4,8 @@ import static java.lang.String.join;
 
 /**
  * This class is used to parse CLI arguments.
+ *
+ * @author jordanabderrachid
  */
 public class Parser {
 
