@@ -6,6 +6,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * This class is used to build a URL sued to call the goeuro remote api from different parameters.
  *
@@ -14,6 +17,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class URLBuilder {
   private static final String URL_TEMPLATE = "http://api.goeuro.com/api/v2/position/suggest/en/%s";
+
+  private static final Logger logger = LogManager.getLogger(URLBuilder.class);
 
   /**
    * build the request url according to the provided city.
@@ -27,7 +32,7 @@ public class URLBuilder {
       String formattedURL = String.format(URL_TEMPLATE, cityURLEncoded);
       return new URL(formattedURL);
     } catch (UnsupportedEncodingException | MalformedURLException e) {
-      // TODO log
+      logger.error("failed to create url", e);
       throw new InvalidCityException("failed to create url");
     }
   }

@@ -3,6 +3,6 @@
 ###### TODO
 
 - [x] handle exceptions in main function
-- [ ] logger
+- [x] logger
 - [x] unit test
 - [x] documentation

@@ -8,6 +8,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is used to call an URL.
@@ -24,6 +26,8 @@ public class Requester {
 
   private static final String USER_AGENT_HEADER_KEY = "User-Agent";
   private static final String USER_AGENT_HEADER_FORMAT = "go-euro-cli/%s";
+
+  private static final Logger logger = LogManager.getLogger(Requester.class);
 
   private URL url;
 
@@ -59,7 +63,7 @@ public class Requester {
       connection.connect();
 
       if (!connection.getContentType().equals(EXPECTED_CONTENT_TYPE)) {
-        // TODO log
+        logger.error("got response with an unsupported content type : " + connection.getContentType());
         throw new BadResponseException("bad response content type");
       }
 
@@ -69,7 +73,7 @@ public class Requester {
 
       return body;
     } catch (IOException e) {
-      // TODO log
+      logger.error("failed to connect to remote API", e);
       throw new ConnectionException("failed to connect to remote API");
     }
   }
